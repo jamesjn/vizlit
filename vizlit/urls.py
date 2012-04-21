@@ -7,6 +7,8 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'generator.views.index'),
+    url(r'^generate/', 'generator.views.generate'),
+    url(r'^results/', 'generator.views.results')
     # url(r'^vizlit/', include('vizlit.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
