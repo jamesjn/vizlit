@@ -17,18 +17,22 @@ def generate(request):
   if request.method == 'POST':
     form = GenerateForm(request.POST)
     if form.is_valid():
+      name = form.cleaned_data['figureName'] 
       os.system("cd /home/jchiang/dev/django/vizlit/generator/vtk_scripts;./prep_xvfb")
       os.environ["DISPLAY"]=":100"
-      generate_figure("name")
+      generate_figure(name)
       os.system("killall Xvfb > /dev/null")
-      name = form.cleaned_data['figureName']
-      return HttpResponseRedirect('/vizlit/results/')
+      return render_to_response('results.html', {'name':name})
   else:
     form = GenerateForm()
 
   return render_to_response('generate.html', {
     'form': form,
   })
+
+class GenerateForm(forms.Form):
+  figureName = forms.CharField(max_length=100)
+ 
 
 def generate_figure(name):
   FILE = open("/home/jchiang/dev/django/vizlit/generator/vtk_scripts/problem1.txt","r");
@@ -52,7 +56,7 @@ def generate_figure(name):
   point1Slice = readlist[10].split(' ');
   point2Slice = readlist[12].split(' ');
   rotationDiagram = readlist[14].split(' ');
-  fileOutput = '/home/jchiang/dev/django/vizlit/generator/vtk_scripts/newImage';
+  fileOutput = '/home/jchiang/dev/django/vizlit/generator/images/' + name;
 
   print originSlice;
 
@@ -252,6 +256,3 @@ def generate_figure(name):
     writerJPEG.SetFileName(fileOutput+"_rotate_"+str(i)+".jpg");
     writerJPEG.Write();
 
-class GenerateForm(forms.Form):
-  figureName = forms.CharField(max_length=100)
- 
