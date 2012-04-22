@@ -1,0 +1,9 @@
+rm *.jpg
+rm *.bmp
+export DISPLAY=:100.0
+killall Xvfb > /dev/null 2>&1
+Xvfb :100 -screen 0 1600x1200x24 > /dev/null 2>&1 &
+python $1 
+killall Xvfb > /dev/null
+wait
+read -p "Finished vtk py script. Press enter key to continue"
