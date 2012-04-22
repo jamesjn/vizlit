@@ -18,10 +18,12 @@ def generate(request):
     form = GenerateForm(request.POST)
     if form.is_valid():
       name = form.cleaned_data['figureName'] 
+      os.system("cd /home/jchiang/dev/django/vizlit/generator/images;rm -f *")
       os.system("cd /home/jchiang/dev/django/vizlit/generator/vtk_scripts;./prep_xvfb")
       os.environ["DISPLAY"]=":100"
       generate_figure(name)
       os.system("killall Xvfb > /dev/null")
+      os.system("cd /home/jchiang/dev/django/vizlit/generator/images;tar cvf images.tar *")
       return render_to_response('results.html', {'name':name})
   else:
     form = GenerateForm()
