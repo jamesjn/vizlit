@@ -2,7 +2,7 @@
 from django.shortcuts import render_to_response
 from django import forms
 from django.http import HttpResponseRedirect
-from generate.models import Figure
+from generator.libraries import Figure
 import os
 import vtk
 import time
@@ -22,7 +22,8 @@ def generate(request):
       os.system("cd /home/jchiang/dev/django/vizlit/generator/images;rm -f *")
       os.system("cd /home/jchiang/dev/django/vizlit/generator/vtk_scripts;./prep_xvfb")
       os.environ["DISPLAY"]=":100"
-      Figure.generate(name)
+      f = Figure()
+      f.generate(name)
       os.system("killall Xvfb > /dev/null")
       os.system("cd /home/jchiang/dev/django/vizlit/generator/images;tar cvf images.tar *")
       return render_to_response('results.html', {'name':name})
