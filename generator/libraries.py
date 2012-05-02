@@ -5,7 +5,7 @@ import os.path
 
 class Figure:
 
-  def generate(self, name):
+  def generate(self, name, imDim1, imDim2, imDim3):
     FILE = open("/home/jchiang/dev/django/vizlit/generator/vtk_scripts/problem1.txt","r");
 
     #Define readlist to store non-empty lines from the input.txt file
@@ -20,7 +20,7 @@ class Figure:
 
     #for now we will use 
 
-    imDimensions = readlist[2].split(' ');
+    #imDimensions = readlist[2].split(' ');
     layerLocs = readlist[4].split(' ');
     layerColors = readlist[6].split(' ');
     originSlice = readlist[8].split(' ');
@@ -31,9 +31,9 @@ class Figure:
 
     print originSlice;
 
-    xDim = int(imDimensions[0]);
-    yDim = int(imDimensions[1]);
-    zDim = int(imDimensions[2]);
+    xDim = imDim1 #int(imDimensions[0]);
+    yDim = imDim2 #int(imDimensions[1]);
+    zDim = imDim3 #int(imDimensions[2]);
 
     ### End File input ###
 
