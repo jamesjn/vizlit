@@ -5,7 +5,10 @@ import os.path
 
 class Figure:
 
-  def generate(self, name, imDim1, imDim2, imDim3):
+  def generate(self, name, imDim1, imDim2, imDim3, rotation_azimuth, rotation_elevation):
+
+    #THIS METHOD NEEDS SERIOUS REFACTORING
+
     FILE = open("/home/jchiang/dev/django/vizlit/generator/vtk_scripts/problem1.txt","r");
 
     #Define readlist to store non-empty lines from the input.txt file
@@ -184,8 +187,8 @@ class Figure:
     iren = vtk.vtkRenderWindowInteractor();
     iren.SetRenderWindow(renWin2);
 
-    (ren.GetActiveCamera()).Azimuth(float(rotationDiagram[0]));
-    (ren.GetActiveCamera()).Elevation(float(rotationDiagram[1]));
+    (ren.GetActiveCamera()).Azimuth(float(rotation_azimuth));
+    (ren.GetActiveCamera()).Elevation(float(rotation_elevation));
     (ren.GetActiveCamera()).SetParallelProjection(0);
 
     ren.SetBackground(1,1,1);

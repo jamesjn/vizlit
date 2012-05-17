@@ -22,11 +22,13 @@ def generate(request):
       imDim1 = form.cleaned_data['imDim1']
       imDim2 = form.cleaned_data['imDim2']
       imDim3 = form.cleaned_data['imDim3']
+      rotation_azimuth = form.cleaned_data['rotation_azimuth']
+      rotation_elevation = form.cleaned_data['rotation_elevation']
       os.system("cd /home/jchiang/dev/django/vizlit/generator/images;rm -f *")
       os.system("cd /home/jchiang/dev/django/vizlit/generator/vtk_scripts;./prep_xvfb")
       os.environ["DISPLAY"]=":100"
       f = Figure()
-      f.generate(name,imDim1,imDim2,imDim3)
+      f.generate(name,imDim1,imDim2,imDim3, rotation_azimuth, rotation_elevation)
       os.system("killall Xvfb > /dev/null")
       os.system("cd /home/jchiang/dev/django/vizlit/generator/images;tar cvf images.tar *")
       return render_to_response('results.html', {'name':name})
@@ -42,4 +44,6 @@ class GenerateForm(forms.Form):
   imDim1 = forms.IntegerField()
   imDim2 = forms.IntegerField()
   imDim3 = forms.IntegerField()
+  rotation_azimuth = forms.IntegerField()
+  rotation_elevation = forms.IntegerField()
  
